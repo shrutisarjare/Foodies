@@ -1,0 +1,32 @@
+import React from 'react';
+import {Route, Routes} from "react-router-dom";
+import AddFood from "./pages/AddFood/AddFood.jsx";
+import ListFood from "./pages/ListFood/ListFood.jsx";
+import Orders from "./pages/Orders/Orders.jsx";
+import Sidebar from "./components/Sidebar/Sidebar.jsx";
+import Menubar from "./components/Menubar/Menubar.jsx";
+
+const App=()=>{
+    return (
+        <div className="d-flex" id="wrapper">
+
+         <Sidebar />
+
+            <div id="page-content-wrapper">
+
+                <Menubar />
+
+                <div className="container-fluid">
+                   <Routes>
+                       <Route path='/add' element={<AddFood/>} />
+                       <Route path='/list' element={<ListFood/>} />
+                       <Route path='/orders' element={<Orders/>} />
+                       <Route path='/' element={<ListFood/>} />
+                   </Routes>
+
+                </div>
+            </div>
+        </div>
+    )
+}
+export default App

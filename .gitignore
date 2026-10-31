@@ -1,0 +1,10 @@
+
+*.txt
+*.env
+access key*
+.env.*
+
+*.txt
+*.env
+access key*
+.env.*
