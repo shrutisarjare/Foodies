@@ -2,6 +2,8 @@ import React, { useState} from 'react';
 import {assets} from "../../assets/assets.js";
 import {Form} from "react-router-dom";
 import axios from "axios";
+import {addFood} from "../../services/foodServices.js";
+import { toast } from 'react-toastify';
 
 const AddFood = () => {
     const [image,setImage]=useState(false);
@@ -21,18 +23,19 @@ const AddFood = () => {
     const onsubmitHandle=async (event)=>{
         event.preventDefault();
         if(!image){
-            alert('please select an image');
+            toast.error('please select an image');
             return;
         }
-        const formData=new FormData();
-        formData.append('food',JSON.stringify(data));
-        formData.append('file',image);
         try{
-           const response=await axios.post('http://localhost:8080/api/foods',formData,{headers:{"Content-Type":"multipart/form-data"}});
-            
-        }catch (error) {
+           await addFood(data,image);
+           toast.success('Food added Successfully');
+           setData({name: '',description: '',category: 'Biryani',price: ''});
+           setImage(null);
+        }catch (e) {
+            toast.error('Error adding in food.');
             
         }
+
     }
 
 
@@ -59,7 +62,7 @@ const AddFood = () => {
                         <div className="mb-3">
                             <label htmlFor="name" className="form-label ">Name</label>
                             <input
-                                type="text"
+                                type="text" placeholder='Chicken Biryani'
                                 className="form-control"
                                 id="name"
                                 required
@@ -73,7 +76,7 @@ const AddFood = () => {
                             <label htmlFor="description" className="form-label ">Description</label>
                             <textarea
                                 className="form-control"
-                                id="description"
+                                id="description" placeholder='Write content here..'
                                 rows="5"
                                 required
                                 name='description'
@@ -96,7 +99,7 @@ const AddFood = () => {
                         </div>
                         <div className="mb-3">
                             <label htmlFor="price" className="form-label ">price</label>
-                            <input type="number" name="price" id="price" className='form-control' onChange={onChangeHandler}
+                            <input type="number" name="price" id="price" placeholder='&#8377;200' className='form-control' onChange={onChangeHandler}
                                    value={data.price} />
                         </div>
 
